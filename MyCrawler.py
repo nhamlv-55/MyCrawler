@@ -31,15 +31,18 @@ def extract(start_pos, page):
 	start_pos=page.find('"', start_pos)
 	end_pos=page.find('"', start_pos+1)
 	link = page[start_pos+1: end_pos]
-	if link[0]=='h':
+	if len(link)>0 and link[0]=='h':
 		return link
 	
 def crawl(start_link):
+	counter=0
 	to_crawl=[start_link]
 	crawled=[]
 	while to_crawl:
 		link=to_crawl.pop()
 		if link not in crawled:
+			counter+=1
+			print counter, link
 			crawled.append(link)
 			current=get_url(link)
 			for el in current:
@@ -48,4 +51,4 @@ def crawl(start_link):
 	return crawled
 
 index=crawl("http://www.udacity.com/cs101x/index.html")
-print len(index)
+#print len(index)
