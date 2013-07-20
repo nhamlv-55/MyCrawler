@@ -34,5 +34,18 @@ def extract(start_pos, page):
 	if link[0]=='h':
 		return link
 	
-for url in get_url('https://github.com/nhamlv-55/MyCrawler'):
-	print url
+def crawl(start_link):
+	to_crawl=[start_link]
+	crawled=[]
+	while to_crawl:
+		link=to_crawl.pop()
+		if link not in crawled:
+			crawled.append(link)
+			current=get_url(link)
+			for el in current:
+				if el not in crawled:
+					to_crawl.append(el)
+	return crawled
+
+index=crawl("http://www.udacity.com/cs101x/index.html")
+print len(index)
