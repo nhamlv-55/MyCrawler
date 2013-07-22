@@ -1,5 +1,5 @@
 import urllib
- 
+from collections import deque
 def get_page(url):#This function is just to return the webpage contents; the source of the webpage when a url is given.
 	try:
 		f = urllib.urlopen(url)
@@ -36,19 +36,21 @@ def extract(start_pos, page):
 	
 def crawl(start_link):
 	counter=0
-	to_crawl=[start_link]
+	to_crawl=deque([start_link])
 	crawled=[]
 	while to_crawl:
-		link=to_crawl.pop()
+		link=to_crawl.popleft()
 		if link not in crawled:
 			counter+=1
 			print counter, link
 			crawled.append(link)
+			#~ if link.find("facebook")!=-1:
+				#~ return 0
 			current=get_url(link)
 			for el in current:
 				if el not in crawled:
 					to_crawl.append(el)
-	return crawled
-
-index=crawl("http://www.udacity.com/cs101x/index.html")
+	return 0
+seed=raw_input("")
+crawl(seed)
 #print len(index)
